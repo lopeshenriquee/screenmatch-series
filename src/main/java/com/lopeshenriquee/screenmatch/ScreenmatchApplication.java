@@ -39,8 +39,8 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
 		for (int i = 0; i <= data1.totalSeasons() ; i++) {
 			var jsonSeason = consumoAPI.obterDados("https://www.omdbapi.com/?t=gilmore+girls&Season="+ i +"&apikey=9287c99a");
-			DataSeason dataSeason = dataConvert.getData(jsonSeason, DataSeason.class);
-			dataSeasonsList.add(dataSeason);
+			DataSeason data3 = dataConvert.getData(jsonSeason, DataSeason.class);
+			dataSeasonsList.add(data3);
 		}
 		dataSeasonsList.forEach(System.out::println);
 
