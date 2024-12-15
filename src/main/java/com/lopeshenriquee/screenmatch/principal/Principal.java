@@ -7,8 +7,10 @@ import com.lopeshenriquee.screenmatch.service.ConsumoAPI;
 import com.lopeshenriquee.screenmatch.service.DataConvert;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
     private Scanner scan = new Scanner(System.in);
@@ -47,5 +49,19 @@ public class Principal {
 //        }
 
         seasonsList.forEach(s -> s.episodes().forEach(e -> System.out.println(e.title())));
+
+        //Lista ordenada de todos os ep
+        List<DataEpisodes> dataEpisodesList = seasonsList.stream()
+                .flatMap(s -> s.episodes().stream())
+                .collect(Collectors.toList()); //é mutável
+
+        //TOP5
+        dataEpisodesList.stream()
+                .filter(e -> !e.imdbRating().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(DataEpisodes::imdbRating).reversed())
+                .limit(5)
+                .forEach(System.out::println);
+
+
     }
 }
