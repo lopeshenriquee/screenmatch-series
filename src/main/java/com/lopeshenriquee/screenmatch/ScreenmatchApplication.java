@@ -1,6 +1,8 @@
 package com.lopeshenriquee.screenmatch;
 
+import com.lopeshenriquee.screenmatch.model.DataSeries;
 import com.lopeshenriquee.screenmatch.service.ConsumoAPI;
+import com.lopeshenriquee.screenmatch.service.DataConvert;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,8 +19,11 @@ public class ScreenmatchApplication implements CommandLineRunner {
 		var consumoAPI = new ConsumoAPI();
 		var json = consumoAPI.obterDados("https://www.omdbapi.com/?t=gilmore+girls&apikey=9287c99a");
 //		System.out.println(json);
-//		json = consumoAPI.obterDados("https://coffee.alexflipnote.dev/random.json");
+//		json = consumoAPI.getData("https://coffee.alexflipnote.dev/random.json");
 		System.out.println(json);
 
+		DataConvert dataConvert = new DataConvert();
+		DataSeries data = dataConvert.getData(json, DataSeries.class);
+		System.out.println(data);
 	}
 }
