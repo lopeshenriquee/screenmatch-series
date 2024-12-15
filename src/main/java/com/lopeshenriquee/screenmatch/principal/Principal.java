@@ -3,6 +3,7 @@ package com.lopeshenriquee.screenmatch.principal;
 import com.lopeshenriquee.screenmatch.model.DataEpisodes;
 import com.lopeshenriquee.screenmatch.model.DataSeason;
 import com.lopeshenriquee.screenmatch.model.DataSeries;
+import com.lopeshenriquee.screenmatch.model.Episodes;
 import com.lopeshenriquee.screenmatch.service.ConsumoAPI;
 import com.lopeshenriquee.screenmatch.service.DataConvert;
 
@@ -62,6 +63,11 @@ public class Principal {
                 .limit(5)
                 .forEach(System.out::println);
 
+        List<Episodes> episodes = seasonsList.stream()
+                .flatMap(season -> season.episodes().stream()
+                        .map(dataEpisode -> new Episodes(season.season(), dataEpisode))
+                ).collect(Collectors.toList());
 
+        episodes.forEach(System.out::println);
     }
 }
