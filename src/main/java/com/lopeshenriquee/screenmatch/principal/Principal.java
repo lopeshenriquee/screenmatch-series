@@ -1,5 +1,6 @@
 package com.lopeshenriquee.screenmatch.principal;
 
+import com.lopeshenriquee.screenmatch.model.DataEpisodes;
 import com.lopeshenriquee.screenmatch.model.DataSeason;
 import com.lopeshenriquee.screenmatch.model.DataSeries;
 import com.lopeshenriquee.screenmatch.service.ConsumoAPI;
@@ -30,11 +31,18 @@ public class Principal {
 
         List<DataSeason> seasonsList = new ArrayList<>();
 
-		for (int i = 0; i < data1.totalSeasons() ; i++) { //https://www.omdbapi.com/?t=gilmore+girls&Season="+ i +"&apikey=9287c99a"
+		for (int i = 1; i <= data1.totalSeasons() ; i++) { //https://www.omdbapi.com/?t=gilmore+girls&Season="+ i +"&apikey=9287c99a"
 			var jsonSeason = consumptionAPI.obterDados(ADRESS + nameSerie.replace(" ", "+")+ "&Season="+ i + APIKEY);
 			DataSeason data2 = dataConvert.getData(jsonSeason, DataSeason.class);
 			seasonsList.add(data2);
 		}
 		seasonsList.forEach(System.out::println);
+
+        for (int i = 0; i < data1.totalSeasons(); i++){
+            List<DataEpisodes> episodesList = seasonsList.get(i).episodes();
+            for (int j = 0; j < episodesList.size(); j++) {
+                System.out.println(episodesList.get(j).title());
+            }
+        }
     }
 }
