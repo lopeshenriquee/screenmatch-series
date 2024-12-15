@@ -24,6 +24,7 @@ public class Principal {
     public void showMenu(){
         System.out.println("Digite o nome da série");
         var nameSerie = scan.nextLine();
+
         var jsonGeneral = consumptionAPI.obterDados(ADRESS + nameSerie.replace(" ", "+") + APIKEY);
 
         DataSeries data1 = dataConvert.getData(jsonGeneral, DataSeries.class);
@@ -38,11 +39,13 @@ public class Principal {
 		}
 		seasonsList.forEach(System.out::println);
 
-        for (int i = 0; i < data1.totalSeasons(); i++){
-            List<DataEpisodes> episodesList = seasonsList.get(i).episodes();
-            for (int j = 0; j < episodesList.size(); j++) {
-                System.out.println(episodesList.get(j).title());
-            }
-        }
+//        for (int i = 0; i < data1.totalSeasons(); i++){
+//            List<DataEpisodes> episodesList = seasonsList.get(i).episodes();
+//            for (int j = 0; j < episodesList.size(); j++) {
+//                System.out.println(episodesList.get(j).title());
+//            }
+//        }
+
+        seasonsList.forEach(s -> s.episodes().forEach(e -> System.out.println(e.title())));
     }
 }
