@@ -3,13 +3,11 @@ package com.lopeshenriquee.screenmatch.principal;
 import com.lopeshenriquee.screenmatch.model.DataEpisodes;
 import com.lopeshenriquee.screenmatch.model.DataSeason;
 import com.lopeshenriquee.screenmatch.model.DataSeries;
+import com.lopeshenriquee.screenmatch.model.Episodes;
 import com.lopeshenriquee.screenmatch.service.ConsumoAPI;
 import com.lopeshenriquee.screenmatch.service.DataConvert;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -67,13 +65,26 @@ public class Principal {
                 .peek(e -> System.out.println("Mapeamento " + e))
                 .forEach(System.out::println);
 
-//        List<Episodes> episodes = seasonsList.stream()
-//                .flatMap(season -> season.episodes().stream()
-//                        .map(dataEpisode -> new Episodes(season.season(), dataEpisode))
-//                ).collect(Collectors.toList());
-//
-//        episodes.forEach(System.out::println);
-//
+        List<Episodes> episodes = seasonsList.stream()
+                .flatMap(season -> season.episodes().stream()
+                        .map(dataEpisode -> new Episodes(season.season(), dataEpisode))
+                ).collect(Collectors.toList());
+
+        episodes.forEach(System.out::println);
+
+        System.out.println("\nDigite um trecho do título do episódio");
+        var pieceTitle = scan.nextLine();
+        Optional<Episodes> findedEp = episodes.stream()
+                .filter(e -> e.getTitle().toUpperCase().contains(pieceTitle.toUpperCase()))
+                .findFirst();
+        if(findedEp.isPresent()){
+            System.out.println("Episódio encontrado!");
+            System.out.println("Temporada: " + findedEp.get().getSeason());
+        } else {
+            System.out.println("Ep não encontrado!");
+        }
+
+
 //        System.out.println("A partir de que ano você deseja ver os episódios? ");
 //        var year = scan.nextInt();
 //        scan.nextLine();
