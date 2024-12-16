@@ -72,23 +72,21 @@ public class Principal {
 
         episodes.forEach(System.out::println);
 
-        System.out.println("\nDigite um trecho do título do episódio");
-        var pieceTitle = scan.nextLine();
-        Optional<Episodes> findedEp = episodes.stream()
-                .filter(e -> e.getTitle().toUpperCase().contains(pieceTitle.toUpperCase()))
-                .findFirst();
-        if(findedEp.isPresent()){
-            System.out.println("Episódio encontrado!");
-            System.out.println("Temporada: " + findedEp.get().getSeason());
-        } else {
-            System.out.println("Ep não encontrado!");
-        }
-
+//        System.out.println("\nDigite um trecho do título do episódio");
+//        var pieceTitle = scan.nextLine();
+//        Optional<Episodes> findedEp = episodes.stream()
+//                .filter(e -> e.getTitle().toUpperCase().contains(pieceTitle.toUpperCase()))
+//                .findFirst();
+//        if(findedEp.isPresent()){
+//            System.out.println("Episódio encontrado!");
+//            System.out.println("Temporada: " + findedEp.get().getSeason());
+//        } else {
+//            System.out.println("Ep não encontrado!");
+//        }
 
 //        System.out.println("A partir de que ano você deseja ver os episódios? ");
 //        var year = scan.nextInt();
 //        scan.nextLine();
-//
 //        LocalDate findDate = LocalDate.of(year, 1, 1);
 //
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -101,5 +99,10 @@ public class Principal {
 //                                "Data Lançamento: " + e.getRelease().format(formatter)
 //                ));
 
+        Map<Integer, Double> classificationBySeason = episodes.stream()
+                .filter(e -> e.getImdbRating() > 0.0)
+                .collect(Collectors.groupingBy(Episodes::getSeason,
+                        Collectors.averagingDouble(Episodes::getImdbRating)));
+        System.out.println(classificationBySeason);
     }
 }
