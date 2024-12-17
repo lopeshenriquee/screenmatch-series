@@ -104,5 +104,13 @@ public class Principal {
                 .collect(Collectors.groupingBy(Episodes::getSeason,
                         Collectors.averagingDouble(Episodes::getImdbRating)));
         System.out.println(classificationBySeason);
+
+        DoubleSummaryStatistics summaryStatistics = episodes.stream()
+                .filter(e -> e.getImdbRating() > 0.0)
+                .collect(Collectors.summarizingDouble(Episodes::getImdbRating));
+        System.out.println("Média: " + summaryStatistics.getAverage());
+        System.out.println("Melhor EP: " + summaryStatistics.getMax());
+        System.out.println("Pior EP: " + summaryStatistics.getMin());
+        System.out.println("Quantidade: " + summaryStatistics.getCount());
     }
 }
